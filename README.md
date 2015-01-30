@@ -6,7 +6,6 @@ Application skeleton generated with yeoman.
 ### Install required libraries ubuntu/debian
 ```bash
 sudo npm install -g yo grunt-cli bower karma
-npm install grunt-contrib-compass --save-dev
 sudo apt-get install ruby-full libgemplugin-ruby
 sudo su -c "gem install sass"
 sudo su -c "gem install compass"
@@ -14,6 +13,8 @@ sudo su -c "gem install compass"
 
 ### Build application 
 ```bash
+npm install
+bower install
 grunt
 ```
 
