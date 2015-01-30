@@ -34,6 +34,11 @@ angular
                 controller: 'ReviewfieldsCtrl',
                 controllerAs: 'ctrl'
             })
+            .when('/save-data/:csvCacheId', {
+                templateUrl: 'views/savedata.html',
+                controller: 'SavedataCtrl',
+                controllerAs: 'ctrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -42,6 +47,19 @@ angular
         localStorageServiceProvider.setPrefix('foundersMapQuest');
         localStorageServiceProvider.setStorageType('localStorage');
     })
-    .run(function($rootScope, $route) {
+    .run(function($rootScope, $route, localStorageService) {
         $rootScope.$route = $route;
+
+        // Watch saved csv
+        $rootScope.$watch(
+            function() {
+                return localStorageService.get('saved-data');
+            },
+            function onDataChanged(savedData) {
+                $rootScope.savedData = savedData;
+
+                console.log('savedData', savedData);
+            },
+            true
+        );
     });
