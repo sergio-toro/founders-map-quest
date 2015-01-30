@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: AboutCtrl', function () {
+describe('Controller: LoadDataCtrl', function () {
 
   // load the controller's module
   beforeEach(module('foundersMapQuestApp'));
 
-  var AboutCtrl,
+  var LoadDataCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    AboutCtrl = $controller('AboutCtrl', {
+    LoadDataCtrl = $controller('LoadDataCtrl', {
       $scope: scope
     });
   }));

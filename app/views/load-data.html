@@ -1,0 +1,75 @@
+<div id="load-data" class="container-fluid">
+
+    <ul class="nav nav-tabs nav-justified">
+        <li role="presentation" class="active">
+            <a href="#/load-data">1. Load data</a>
+        </li>
+        <li role="presentation"
+            ng-class="{
+                'disabled': !ctrl.csvCacheId
+            }">
+            <a  href="javascript:;"
+                ng-click="ctrl.goReviewFields(ctrl.csvCacheId)"
+                ng-disabled="!ctrl.csvCacheId">
+                2. Review fields
+            </a>
+        </li>
+        <li role="presentation" class="disabled">
+            <a href="javascript:;">3. Save data</a>
+        </li>
+    </ul>
+
+    <div>
+        <label>CSV data</label>
+        <p>
+            <fmq-file-input
+                ng-model="ctrl.file"
+                ng-change="ctrl.loadCSVFile(ctrl.file)">
+                <i class="fa fa-plus-square-o"></i> CSV File
+            </fmq-file-input>
+            Choose a file or paste CSV content.
+        </p>
+        <textarea
+            ng-model="ctrl.csvData"
+            ng-change="ctrl.parseCsv()"
+            ng-model-options="{ debounce: 350 }"
+            rows="5"
+            class="form-control"></textarea>
+    </div>
+
+    <br>
+
+    <div ng-show="ctrl.csvData.length">
+        <label for="fieldSeparator">Field delimiter</label>
+
+        <select id="fieldSeparator"
+            class="form-control"
+            ng-model="ctrl.delimiter"
+            ng-options="item.value as item.name for item in ctrl.fieldDelimiters"
+            ng-change="ctrl.parseCsv()"></select>
+    </div>
+
+    <br>
+
+    <div ng-show="ctrl.data.heading.length">
+        <label>Data preview</label>
+        <div class="overflow-350 well well-sm">
+            <table class="table table-condensed table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th ng-repeat="item in ctrl.data.heading">
+                            {{item}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in ctrl.data.data">
+                        <td ng-repeat="item in row">
+                            {{item}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
