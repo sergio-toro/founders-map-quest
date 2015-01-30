@@ -1,0 +1,56 @@
+<div id="load-data" class="container-fluid">
+
+    <ul class="nav nav-tabs nav-justified">
+        <li role="presentation" class="disabled">
+            <a href="javascript:;">1. Load data</a>
+        </li>
+        <li role="presentation">
+            <a  href="javascript:;"
+                ng-click="ctrl.goReviewFields(ctrl.csvCacheId)">
+                2. Review fields
+            </a>
+        </li>
+        <li role="presentation" class="active">
+            <a  href="javascript:;">
+                3. Save data
+            </a>
+        </li>
+    </ul>
+
+    <br>
+
+    <div class="jumbotron" ng-show="ctrl.question=='is-there-latLng'">
+        <h2 class="text-center">There is <b>latitude</b>/<b>longitude</b> fields you would like to use for geolocating results?</h2>
+
+        <p class="text-center">
+            <button class="btn btn-danger btn-lg"
+                ng-click="ctrl.setQuestion('is-there-address')">
+                No
+            </button>
+            <button class="btn btn-primary btn-lg"
+                ng-click="ctrl.setQuestion('where-is-latitude')">
+                Yes
+            </button>
+        </p>
+    </div>
+
+    <div>
+        <label for="dataName">
+            Data name
+        </label>
+        <input type="text"
+            ng-model="ctrl.data.name"
+            class="form-control">
+    </div>
+
+    <br>
+
+    <p>
+        <button class="btn btn-primary btn-lg"
+            ng-disabled="!ctrl.data.name.length"
+            ng-click="ctrl.saveData(ctrl.csvCacheId)">
+            Save and see map
+        </button>
+    </p>
+
+</div>
