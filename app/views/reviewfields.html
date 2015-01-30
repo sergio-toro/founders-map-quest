@@ -5,24 +5,25 @@
             <a href="javascript:;">1. Load data</a>
         </li>
         <li role="presentation" class="active">
-            <a  href="javascript:;"
-                ng-click="ctrl.goReviewFields(ctrl.csvCacheId)"
-                ng-disabled="!ctrl.csvCacheId">
+            <a href="javascript:;">
                 2. Review fields
             </a>
         </li>
         <li role="presentation"
             ng-class="{
-                'disabled': true
+                'disabled': !ctrl.csvCacheId
             }">
-            <a href="javascript:;">3. Save data</a>
+            <a  href="javascript:;"
+                ng-click="ctrl.goSaveData(ctrl.csvCacheId)"
+                ng-disabled="!ctrl.csvCacheId">
+                3. Save data
+            </a>
         </li>
     </ul>
 
     <br>
 
     <!-- QUESTIONS PART -->
-
     <div class="jumbotron" ng-show="ctrl.question=='is-there-latLng'">
         <h2 class="text-center">There is <b>latitude</b>/<b>longitude</b> fields you would like to use for geolocating results?</h2>
 
@@ -59,20 +60,100 @@
             <span aria-hidden="true">&times;</span>
         </button>
         <strong>Error!</strong> Geolocation fields are required to continue.
+        <button class="btn btn-default btn-sm"
+            ng-click="ctrl.restart()">
+            Reset
+        </button>
+    </div>
+
+    <div class="jumbotron" ng-show="ctrl.question=='is-there-label'">
+        <h2 class="text-center">There is a <b>field</b> you would like to use for marker label?</h2>
+
+        <p class="text-center">
+            <button class="btn btn-danger btn-lg"
+                ng-click="ctrl.setQuestion('review-fields')">
+                No
+            </button>
+            <button class="btn btn-primary btn-lg"
+                ng-click="ctrl.setQuestion('where-is-label')">
+                Yes
+            </button>
+        </p>
     </div>
 
     <!-- END QUESTIONS PART -->
 
     <!-- SELECT FIELD PART -->
+    <div class="jumbotron" ng-show="ctrl.question=='where-is-latitude'">
+        <h2 class="text-center">Wich field is the <b>latitude</b>?</h2>
+
+        <p class="text-center">
+            <button class="btn btn-default btn-lg"
+                ng-repeat="item in ctrl.data.heading"
+                ng-click="ctrl.setLatitude($index)">
+                {{item}}
+            </button>
+        </p>
+    </div>
+    <div class="jumbotron" ng-show="ctrl.question=='where-is-longitude'">
+        <h2 class="text-center">Wich field is the <b>longitude</b>?</h2>
+
+        <p class="text-center">
+            <button class="btn btn-default btn-lg"
+                ng-repeat="item in ctrl.data.heading"
+                ng-hide="$index===ctrl.data.latFieldIndex"
+                ng-click="ctrl.setLongitude($index)">
+                {{item}}
+            </button>
+        </p>
+    </div>
+
+    <div class="jumbotron" ng-show="ctrl.question=='where-is-label'">
+        <h2 class="text-center">Wich field is the <b>label</b>?</h2>
+
+        <p class="text-center">
+            <button class="btn btn-default btn-lg"
+                ng-repeat="item in ctrl.data.heading"
+                ng-click="ctrl.setLabel($index)">
+                {{item}}
+            </button>
+        </p>
+    </div>
     <!-- END SELECT FIELD PART -->
 
-    <!--table class="table table-condensed table-striped table-bordered table-hover">
-        <thead>
-            <tr>
-                <th ng-repeat="item in ctrl.data.heading">
-                    {{item}}
-                </th>
-            </tr>
-        </thead>
-    </table-->
+    <div class="jumbotron" ng-show="ctrl.question=='review-fields'">
+        <h2 class="text-center">Are these fields correct?</h2>
+
+        <p class="text-center">
+            <span ng-show="ctrl.data.latFieldIndex!==null">
+                <b>Latitude field:</b> {{ctrl.data.heading[ctrl.data.latFieldIndex]}}
+                <br>
+            </span>
+            <span ng-show="ctrl.data.lngFieldIndex!==null">
+                <b>Longitude field:</b> {{ctrl.data.heading[ctrl.data.lngFieldIndex]}}
+                <br>
+            </span>
+            <span ng-show="ctrl.data.addressFieldIndex!==null">
+                <b>Address field:</b> {{ctrl.data.heading[ctrl.data.addressFieldIndex]}}
+                <br>
+            </span>
+            <span ng-show="ctrl.data.labelFieldIndex!==null">
+                <b>Label field:</b> {{ctrl.data.heading[ctrl.data.labelFieldIndex]}}
+                <br>
+            </span>
+
+            <br>
+
+            <button class="btn btn-danger btn-lg"
+                ng-click="ctrl.restart()">
+                No, reset
+            </button>
+            <button class="btn btn-primary btn-lg"
+                ng-click="ctrl.goSaveData(ctrl.csvCacheId)">
+                Yes, continue to Save data
+            </button>
+        </p>
+    </div>
+
+
 </div>
