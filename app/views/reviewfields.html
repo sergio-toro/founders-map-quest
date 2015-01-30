@@ -1,0 +1,78 @@
+<div id="load-data" class="container-fluid">
+
+    <ul class="nav nav-tabs nav-justified">
+        <li role="presentation" class="disabled">
+            <a href="javascript:;">1. Load data</a>
+        </li>
+        <li role="presentation" class="active">
+            <a  href="javascript:;"
+                ng-click="ctrl.goReviewFields(ctrl.csvCacheId)"
+                ng-disabled="!ctrl.csvCacheId">
+                2. Review fields
+            </a>
+        </li>
+        <li role="presentation"
+            ng-class="{
+                'disabled': true
+            }">
+            <a href="javascript:;">3. Save data</a>
+        </li>
+    </ul>
+
+    <br>
+
+    <!-- QUESTIONS PART -->
+
+    <div class="jumbotron" ng-show="ctrl.question=='is-there-latLng'">
+        <h2 class="text-center">There is <b>latitude</b>/<b>longitude</b> fields you would like to use for geolocating results?</h2>
+
+        <p class="text-center">
+            <button class="btn btn-danger btn-lg"
+                ng-click="ctrl.setQuestion('is-there-address')">
+                No
+            </button>
+            <button class="btn btn-primary btn-lg"
+                ng-click="ctrl.setQuestion('where-is-latitude')">
+                Yes
+            </button>
+        </p>
+    </div>
+
+    <div class="jumbotron" ng-show="ctrl.question=='is-there-address'">
+        <h2 class="text-center">There is <b>address</b> field you would like to use for geolocating results?</h2>
+
+        <p class="text-center">
+            <button class="btn btn-danger btn-lg"
+                ng-click="ctrl.error='geolocation-required'">
+                No
+            </button>
+            <button class="btn btn-primary btn-lg"
+                ng-click="ctrl.setQuestion('where-is-address')">
+                Yes
+            </button>
+        </p>
+    </div>
+    <div ng-show="ctrl.error=='geolocation-required'"
+        class="alert alert-danger alert-dismissible"
+        role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Error!</strong> Geolocation fields are required to continue.
+    </div>
+
+    <!-- END QUESTIONS PART -->
+
+    <!-- SELECT FIELD PART -->
+    <!-- END SELECT FIELD PART -->
+
+    <!--table class="table table-condensed table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th ng-repeat="item in ctrl.data.heading">
+                    {{item}}
+                </th>
+            </tr>
+        </thead>
+    </table-->
+</div>
