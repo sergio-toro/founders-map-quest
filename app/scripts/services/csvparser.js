@@ -17,10 +17,11 @@
                 var
                     heading = [],
                     results = window.Papa.parse(csvString, {
-                    delimiter: delimiter
+                    delimiter: delimiter,
+                    skipEmptyLines: true
                 });
 
-                if (!results.errors.length) {
+                if (results.data.length) {
                     heading = (results.data.splice(0, 1))[0];
 
                     for (var i = heading.length - 1; i >= 0; i--) {
