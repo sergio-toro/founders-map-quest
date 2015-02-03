@@ -19,38 +19,27 @@
 
     <br>
 
-    <div class="jumbotron" ng-show="ctrl.question=='is-there-latLng'">
-        <h2 class="text-center">There is <b>latitude</b>/<b>longitude</b> fields you would like to use for geolocating results?</h2>
+    <p class="text-center padding-top-100 min-height-300" ng-show="ctrl.geoLocateLoading">
+        Geolocating data, please wait... <i class="fa fa-spinner fa-spin fa-2x"></i>
+    </p>
 
-        <p class="text-center">
-            <button class="btn btn-danger btn-lg"
-                ng-click="ctrl.setQuestion('is-there-address')">
-                No
-            </button>
-            <button class="btn btn-primary btn-lg"
-                ng-click="ctrl.setQuestion('where-is-latitude')">
-                Yes
-            </button>
-        </p>
-    </div>
-
-    <div>
+    <div ng-hide="ctrl.geoLocateLoading">
         <label for="dataName">
             Data name
         </label>
         <input type="text"
             ng-model="ctrl.data.name"
             class="form-control">
+        <br>
+
+        <p>
+            <button class="btn btn-primary btn-lg"
+                ng-disabled="!ctrl.data.name.length"
+                ng-click="ctrl.saveData(ctrl.csvCacheId)">
+                Save and see map
+            </button>
+        </p>
     </div>
 
-    <br>
-
-    <p>
-        <button class="btn btn-primary btn-lg"
-            ng-disabled="!ctrl.data.name.length"
-            ng-click="ctrl.saveData(ctrl.csvCacheId)">
-            Save and see map
-        </button>
-    </p>
 
 </div>
