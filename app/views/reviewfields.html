@@ -107,6 +107,29 @@
             </button>
         </p>
     </div>
+    <div class="jumbotron" ng-show="ctrl.question=='where-is-address'">
+        <h2 class="text-center">Wich <b>field/s</b> would you like to use for geolocating by address?</h2>
+
+        <p class="text-center">
+            <button class="btn btn-default btn-lg"
+                ng-class="{ 'active': ctrl.isAddressField($index) }"
+                ng-repeat="item in ctrl.data.heading"
+                ng-click="ctrl.setAddressField($index)">
+                {{item}}
+            </button>
+
+            <br>
+            <br>
+
+            <button class="btn btn-primary btn-lg"
+                ng-show="ctrl.data.addressFieldsIndex.length"
+                ng-click="ctrl.setQuestion('is-there-label')">
+                Continue
+            </button>
+
+        </p>
+
+    </div>
 
     <div class="jumbotron" ng-show="ctrl.question=='where-is-label'">
         <h2 class="text-center">Wich field is the <b>label</b>?</h2>
@@ -134,7 +157,10 @@
                 <br>
             </span>
             <span ng-show="ctrl.data.addressFieldIndex!==null">
-                <b>Address field:</b> {{ctrl.data.heading[ctrl.data.addressFieldIndex]}}
+                <b>Address field/s:</b>
+                <span ng-repeat="fieldIndex in ctrl.data.addressFieldsIndex">
+                    {{ctrl.data.heading[fieldIndex]}}<span ng-hide="$last">, </span>
+                </span>
                 <br>
             </span>
             <span ng-show="ctrl.data.labelFieldIndex!==null">

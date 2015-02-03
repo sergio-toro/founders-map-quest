@@ -15,10 +15,10 @@
         self.csvCacheId = null;
 
         self.data = localStorageService.get($routeParams.csvCacheId);
-        self.data.latFieldIndex     = null;
-        self.data.lngFieldIndex     = null;
-        self.data.addressFieldIndex = null;
-        self.data.labelFieldIndex   = null;
+        self.data.latFieldIndex      = null;
+        self.data.lngFieldIndex      = null;
+        self.data.addressFieldsIndex = null;
+        self.data.labelFieldIndex    = null;
     };
 
     ReviewfieldsCtrl.prototype.goSaveData = function(csvCacheId) {
@@ -34,7 +34,7 @@
         self.question = question;
 
         if (question==='review-fields') {
-            self.localStorageService.set(self.$routeParams.csvCacheId, self.data)
+            self.localStorageService.set(self.$routeParams.csvCacheId, self.data);
             self.csvCacheId = self.$routeParams.csvCacheId;
         }
     };
@@ -53,6 +53,37 @@
         self.setQuestion('is-there-label');
     };
 
+    ReviewfieldsCtrl.prototype.setAddressField = function($index) {
+        var self = this;
+
+        if (self.data.addressFieldsIndex===null) {
+            self.data.addressFieldsIndex = [];
+        }
+
+        if (!self.isAddressField($index)) {
+            self.data.addressFieldsIndex.push($index);
+        }
+        else {
+            // Remove item from selected list
+            self.data.addressFieldsIndex.splice(
+                self.data.addressFieldsIndex.indexOf($index),
+                1
+            );
+        }
+    };
+
+    ReviewfieldsCtrl.prototype.isAddressField = function($index) {
+        var self = this;
+
+        if (self.data.addressFieldsIndex!==null) {
+            if (-1!==self.data.addressFieldsIndex.indexOf($index)) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     ReviewfieldsCtrl.prototype.setLabel = function($index) {
         var self = this;
 
@@ -63,10 +94,10 @@
     ReviewfieldsCtrl.prototype.restart = function() {
         var self = this;
 
-        self.data.latFieldIndex     = null;
-        self.data.lngFieldIndex     = null;
-        self.data.addressFieldIndex = null;
-        self.data.labelFieldIndex   = null;
+        self.data.latFieldIndex      = null;
+        self.data.lngFieldIndex      = null;
+        self.data.addressFieldsIndex = null;
+        self.data.labelFieldIndex    = null;
 
         self.csvCacheId = null;
 
