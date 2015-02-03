@@ -26,8 +26,9 @@
         <p>
             <fmq-file-input
                 ng-model="ctrl.file"
+                btn-class="'btn btn-sm btn-primary'"
                 ng-change="ctrl.loadCSVFile(ctrl.file)">
-                <i class="fa fa-plus-square-o"></i> CSV File
+                <i class="fa fa-file-excel-o"></i> CSV File
             </fmq-file-input>
             Choose a file or paste CSV content.
         </p>
@@ -66,7 +67,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in ctrl.data.data">
-                        <td ng-repeat="item in row">
+                        <td ng-repeat="item in row track by $index">
                             {{item}}
                         </td>
                     </tr>
