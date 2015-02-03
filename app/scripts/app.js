@@ -20,9 +20,10 @@ angular
     ])
     .config(function ($routeProvider, localStorageServiceProvider) {
         $routeProvider
-            .when('/', {
+            .when('/map/:csvCacheId?', {
                 templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                controllerAs: 'ctrl'
             })
             .when('/load-data', {
                 templateUrl: 'views/load-data.html',
@@ -40,7 +41,7 @@ angular
                 controllerAs: 'ctrl'
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/map'
             });
 
         // Configure LocalStorage
@@ -57,8 +58,6 @@ angular
             },
             function onDataChanged(savedData) {
                 $rootScope.savedData = savedData;
-
-                console.log('savedData', savedData);
             },
             true
         );
