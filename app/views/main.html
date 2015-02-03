@@ -1,3 +1,37 @@
 <div id="main" class="container-fluid">
-    <map zoom="2" center="[43.6650000, -79.4103000]"></map>
+    <h1>{{ctrl.data.name}}</h1>
+    <ul class="nav nav-tabs">
+        <li role="presentation"
+            ng-class="{ 'active': ctrl.tab==='map' }">
+            <a href="javascript:;" ng-click="ctrl.tab='map'">Map</a>
+        </li>
+        <li role="presentation"
+            ng-show="ctrl.data"
+            ng-class="{ 'active': ctrl.tab==='table' }">
+            <a href="javascript:;" ng-click="ctrl.tab='table'">Data</a>
+        </li>
+    </ul>
+    <div ng-show="ctrl.tab==='map'">
+        <map zoom="2" center="[43.6650000, -79.4103000]"></map>
+    </div>
+    <div ng-show="ctrl.tab==='table'">
+        <div class="overflow-350 well well-sm">
+            <table class="table table-condensed table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th ng-repeat="item in ctrl.data.heading">
+                            {{item}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in ctrl.data.data">
+                        <td ng-repeat="(key, item) in ctrl.data.heading">
+                            {{row[key]}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
