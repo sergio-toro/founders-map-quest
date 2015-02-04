@@ -1,0 +1,40 @@
+<div class="row" ng-show="ctrl.totalResults>0">
+    <div ng-if="!ctrl.disablePerPage" class="col-xs-3">
+        <div ng-show="ctrl.totalResults">
+            <label class="form-control-static">
+                Per page
+            </label>
+            <select
+                class="form-control input-sm per-page"
+                ng-model="ctrl.perPage"
+                ng-options="perPage for perPage in ctrl.perPageOptions"
+                ng-change="ctrl.onPerPageChanged()"
+            ></select>
+        </div>
+    </div>
+    <div ng-if="!ctrl.disablePageInfo" class="col-xs-4">
+        <span class="text-center block" ng-switch="ctrl.totalResults">
+            <span class="inline" ng-switch-when="1">
+                Showing {{ctrl.totalResults}} registers
+            </span>
+            <span class="inline" ng-switch-default>
+                Showing registers {{ctrl.resultsStart+1}} to {{ctrl.resultsEnd}} of {{ctrl.totalResults}} totals
+            </span>
+        </span>
+    </div>
+    <div ng-class="{
+            'col-xs-12': ctrl.disablePageInfo && ctrl.disablePerPage,
+            'col-xs-9': ctrl.disablePageInfo && !ctrl.disablePerPage,
+            'col-xs-8': !ctrl.disablePageInfo && ctrl.disablePerPage,
+            'col-xs-5': !ctrl.disablePageInfo && !ctrl.disablePerPage,
+        }">
+        <div class="block text-right">
+            <fmq-pagination
+                ng-model="ctrl.currentPage"
+                per-page="ctrl.perPage"
+                max-pages="ctrl.maxPages"
+                total-results="ctrl.totalResults">
+            </fmq-pagination>
+        </div>
+    </div>
+</div>

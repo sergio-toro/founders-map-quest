@@ -1,37 +1,85 @@
 <div id="main" class="container-fluid">
+
     <h1>{{ctrl.data.name}}</h1>
+
     <ul class="nav nav-tabs">
         <li role="presentation"
             ng-class="{ 'active': ctrl.tab==='map' }">
             <a href="javascript:;" ng-click="ctrl.tab='map'">Map</a>
         </li>
         <li role="presentation"
-            ng-show="ctrl.data"
+            ng-show="ctrl.filteredData.length"
             ng-class="{ 'active': ctrl.tab==='table' }">
             <a href="javascript:;" ng-click="ctrl.tab='table'">Data</a>
         </li>
     </ul>
+
+    <br>
+
     <div ng-show="ctrl.tab==='map'">
         <map zoom="2" center="[43.6650000, -79.4103000]"></map>
     </div>
     <div ng-show="ctrl.tab==='table'">
-        <div class="overflow-350 well well-sm">
-            <table class="table table-condensed table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th ng-repeat="item in ctrl.data.heading">
-                            {{item}}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="row in ctrl.data.data">
-                        <td ng-repeat="(key, item) in ctrl.data.heading">
-                            {{row[key]}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <div class="row">
+            <div class="col-xs-7"></div>
+            <div class="col-xs-2">
+                <select id="fieldSeparator"
+                    class="form-control"
+                    ng-model="ctrl.searchBy"
+                    ng-options="item.value as item.name for item in ctrl.searchByFields"
+                    ng-change="ctrl.search && ctrl.filterData()">
+                </select>
+            </div>
+            <div class="col-xs-3">
+                <div class="form-group width-200">
+                    <div class="input-group">
+                        <label for="pageSearch" class="input-group-addon">
+                            <i class="fa fa-search"></i>
+                        </label>
+                        <input id="pageSearch"
+                            type="text"
+                            class="form-control"
+                            ng-model="ctrl.search"
+                            placeholder="Filter results..."
+                            ng-change="ctrl.filterData()"
+                            ng-model-options="{
+                                debounce: 350
+                            }"/>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <table class="table table-condensed table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th ng-repeat="item in ctrl.data.heading">
+                        <fmq-order-field
+                            ng-model="ctrl.orderBy"
+                            ng-change="ctrl.filterData()"
+                            field="{{$index}}">
+                            {{item}}
+                        </fmq-order-field>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in ctrl.filteredData | startFrom:ctrl.currentPage*ctrl.perPage | limitTo:ctrl.perPage">
+                    <td ng-repeat="(key, item) in ctrl.data.heading">
+                        {{row[key]}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <fmq-table-footer
+            per-page="ctrl.perPage"
+            per-page-options="ctrl.perPageOptions"
+            current-page="ctrl.currentPage"
+            max-pages="ctrl.maxPages"
+            on-per-page-changed="ctrl.filterData()"
+            total-results="ctrl.filteredData.length">
+        <fmq-table-footer>
     </div>
 </div>

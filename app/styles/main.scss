@@ -8,6 +8,10 @@
     padding: 0.2em 0;
 }
 
+body, html {
+    font-family: 'Open Sans', sans-serif;
+}
+
 [class^="overflow-"], [class*=" overflow-"] {
     overflow: auto;
 }
@@ -16,6 +20,12 @@
     &.min-height {
         height: 300px;
     }
+}
+.block {
+    display: block;
+}
+.inline {
+    display: inline;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */

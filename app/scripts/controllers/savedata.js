@@ -46,7 +46,7 @@
                         row.push(result[0].geometry.location.lat());
                         row.push(result[0].geometry.location.lng());
 
-                        defer.resolve()
+                        defer.resolve();
                     },
                     function onError() {
                         defer.resolve('There was an error geolocating address `'+address+'`');

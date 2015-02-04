@@ -1,0 +1,28 @@
+
+/* Pagination directive */
+fmq-pagination {
+    ul.pagination {
+        margin: 0;
+    }
+}
+
+/* Table footer directive */
+fmq-table-footer {
+    label.form-control-static {
+        font-size: 12px;
+        font-weight: normal;
+    }
+    select.per-page {
+        display: inline;
+        font-size: 12px;
+        text-align: center;
+        width: 50px;
+    }
+
+    span.text-align-center {
+        line-height: 30px;
+        > span {
+            line-height: 16px;
+        }
+    }
+}
