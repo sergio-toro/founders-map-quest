@@ -2,7 +2,7 @@
 
     <ul class="nav nav-tabs nav-justified">
         <li role="presentation" class="disabled">
-            <a href="javascript:;">1. Load data</a>
+            <a href="javascript:;">1. Load CSV</a>
         </li>
         <li role="presentation">
             <a  href="javascript:;"
@@ -12,7 +12,7 @@
         </li>
         <li role="presentation" class="active">
             <a  href="javascript:;">
-                3. Save data
+                3. Save CSV
             </a>
         </li>
     </ul>
@@ -20,12 +20,12 @@
     <br>
 
     <p class="text-center padding-top-100 min-height-300" ng-show="ctrl.geoLocateLoading">
-        Geolocating data, please wait... <i class="fa fa-spinner fa-spin fa-2x"></i>
+        Geolocating CSV results, please wait... <i class="fa fa-spinner fa-spin fa-2x"></i>
     </p>
 
     <div ng-hide="ctrl.geoLocateLoading">
         <label for="dataName">
-            Data name
+            CSV name
         </label>
         <input type="text"
             ng-model="ctrl.data.name"

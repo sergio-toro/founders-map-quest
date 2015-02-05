@@ -48,16 +48,13 @@ angular
         localStorageServiceProvider.setPrefix('foundersMapQuest');
         localStorageServiceProvider.setStorageType('localStorage');
     })
-    .run(function($rootScope, $route, localStorageService) {
+    .run(function($rootScope, $route, CsvStorage) {
         $rootScope.$route = $route;
 
         // Watch saved csv
-        $rootScope.$watch(
-            function() {
-                return localStorageService.get('saved-data');
-            },
-            function onDataChanged(savedData) {
-                $rootScope.savedData = savedData;
+        $rootScope.$watch( function watchFn() { return CsvStorage.data; },
+            function onDataChanged(data) {
+                $rootScope.csvList = data.csvList;
             },
             true
         );

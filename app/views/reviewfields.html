@@ -2,7 +2,7 @@
 
     <ul class="nav nav-tabs nav-justified">
         <li role="presentation" class="disabled">
-            <a href="javascript:;">1. Load data</a>
+            <a href="javascript:;">1. Load CSV</a>
         </li>
         <li role="presentation" class="active">
             <a href="javascript:;">
@@ -14,9 +14,8 @@
                 'disabled': !ctrl.csvCacheId
             }">
             <a  href="javascript:;"
-                ng-click="ctrl.goSaveData(ctrl.csvCacheId)"
-                ng-disabled="!ctrl.csvCacheId">
-                3. Save data
+                ng-click="ctrl.goSaveData(ctrl.csvCacheId)">
+                3. Save CSV
             </a>
         </li>
     </ul>
@@ -156,7 +155,7 @@
                 <b>Longitude field:</b> {{ctrl.data.heading[ctrl.data.lngFieldIndex]}}
                 <br>
             </span>
-            <span ng-show="ctrl.data.addressFieldIndex!==null">
+            <span ng-show="ctrl.data.addressFieldsIndex!==null">
                 <b>Address field/s:</b>
                 <span ng-repeat="fieldIndex in ctrl.data.addressFieldsIndex">
                     {{ctrl.data.heading[fieldIndex]}}<span ng-hide="$last">, </span>
@@ -176,7 +175,7 @@
             </button>
             <button class="btn btn-primary btn-lg"
                 ng-click="ctrl.goSaveData(ctrl.csvCacheId)">
-                Yes, continue to Save data
+                Yes, continue to Save CSV
             </button>
         </p>
     </div>

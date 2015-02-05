@@ -2,20 +2,19 @@
 
     <ul class="nav nav-tabs nav-justified">
         <li role="presentation" class="active">
-            <a href="#/load-data">1. Load data</a>
+            <a href="#/load-data">1. Load CSV</a>
         </li>
         <li role="presentation"
             ng-class="{
                 'disabled': !ctrl.csvCacheId
             }">
             <a  href="javascript:;"
-                ng-click="ctrl.goReviewFields(ctrl.csvCacheId)"
-                ng-disabled="!ctrl.csvCacheId">
+                ng-click="ctrl.goReviewFields(ctrl.csvCacheId)">
                 2. Review fields
             </a>
         </li>
         <li role="presentation" class="disabled">
-            <a href="javascript:;">3. Save data</a>
+            <a href="javascript:;">3. Save CSV</a>
         </li>
     </ul>
 
@@ -56,29 +55,41 @@
 
     <div ng-show="ctrl.data.heading.length">
         <label>Data preview</label>
-        <div class="overflow-350 well well-sm">
-            <table class="table table-condensed table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th ng-repeat="item in ctrl.data.heading">
-                            {{item}}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="row in ctrl.data.data">
-                        <td ng-repeat="item in row track by $index">
-                            {{item}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="well well-sm">
+
+            <div class="overflow-x">
+                <table class="table table-condensed table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="item in ctrl.data.heading">
+                                {{item}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in ctrl.filteredData | startFrom:ctrl.currentPage*ctrl.perPage | limitTo:ctrl.perPage">
+                            <td ng-repeat="(key, item) in ctrl.data.heading"
+                                ng-bind-html="row[key] | fmqFilterValue">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <fmq-table-footer
+                per-page="ctrl.perPage"
+                per-page-options="ctrl.perPageOptions"
+                current-page="ctrl.currentPage"
+                max-pages="ctrl.maxPages"
+                on-per-page-changed="ctrl.filterData()"
+                total-results="ctrl.filteredData.length">
+            <fmq-table-footer>
         </div>
 
         <p class="text-center">
             <button class="btn btn-primary btn-lg"
                 ng-click="ctrl.goReviewFields(ctrl.csvCacheId)">
-                Continue to review fields
+                Continue to Review fields
             </button>
         </p>
     </div>

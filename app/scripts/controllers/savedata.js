@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var SavedataCtrl = function($scope, $q, $location, $routeParams, localStorageService, GeoCoder) {
+    var SavedataCtrl = function($scope, $q, $location, $routeParams, CsvStorage, GeoCoder) {
         var self = this;
 
         self.$scope              = $scope;
@@ -9,12 +9,12 @@
         self.$location           = $location;
         self.$q                  = $q;
         self.GeoCoder            = GeoCoder;
-        self.localStorageService = localStorageService;
+        self.CsvStorage          = CsvStorage;
 
         self.csvCacheId          = $routeParams.csvCacheId;
 
-        self.data = localStorageService.get($routeParams.csvCacheId);
-        self.data.name = null;
+        self.data                = CsvStorage.getCsv($routeParams.csvCacheId);
+        self.data.name           = self.data.name || null;
         self.data.hideFieldIndex = null;
     };
 
@@ -42,7 +42,6 @@
             self.GeoCoder.geocode({ address: address })
                 .then(
                     function onSuccess(result) {
-                        console.log(result[0]);
                         row.push(result[0].geometry.location.lat());
                         row.push(result[0].geometry.location.lng());
 
@@ -59,35 +58,6 @@
         return self.$q.all(geolocationPromises);
     };
 
-    SavedataCtrl.prototype.updateSavedData = function(csvCacheId) {
-        var self = this;
-
-        var savedData = self.localStorageService.get('saved-data');
-
-        if (!savedData) {
-            savedData = [];
-        }
-
-        // check if it's already saved
-        var isNew = true;
-        for (var i = savedData.length - 1; i >= 0; i--) {
-            if (savedData[i].csvCacheId===csvCacheId && self.data.name) {
-                savedData[i].name = self.data.name;
-                isNew = false;
-                break;
-            }
-        }
-
-        // Check new saved item
-        if (isNew && self.data.name && csvCacheId) {
-            savedData.push({
-                name: self.data.name,
-                csvCacheId: csvCacheId
-            });
-        }
-        self.localStorageService.set('saved-data', savedData);
-
-    };
     SavedataCtrl.prototype.saveData = function(csvCacheId) {
         var self = this;
 
@@ -103,11 +73,11 @@
                         // Update wich fields contains lat, lng
                         self.data.latFieldIndex  = self.data.heading.length;
                         self.data.lngFieldIndex  = self.data.latFieldIndex+1;
+                        self.data.hideFieldIndex = self.data.lngFieldIndex+1;
 
                         // Save updated csv content
-                        self.localStorageService.set(csvCacheId, self.data);
+                        self.CsvStorage.storeCsv(csvCacheId, self.data);
 
-                        self.updateSavedData(csvCacheId);
                         self.$location.path('/map/'+csvCacheId);
                     },
                     function onError(){
@@ -117,11 +87,11 @@
             ;
         }
         else {
-            // Save updated csv content
-            self.localStorageService.set(csvCacheId, self.data);
+            self.data.hideFieldIndex = self.data.heading.length;
 
-            // Save updated data
-            self.updateSavedData(csvCacheId);
+            // Save updated csv content
+            self.CsvStorage.storeCsv(csvCacheId, self.data);
+
             self.$location.path('/map/'+csvCacheId);
         }
     };

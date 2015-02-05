@@ -2,19 +2,21 @@
 
     'use strict';
 
-    var ReviewfieldsCtrl = function($scope, $location, $routeParams, localStorageService) {
+    var ReviewfieldsCtrl = function($scope, $location, $routeParams, CsvStorage) {
         var self = this;
 
-        self.$scope              = $scope;
-        self.$routeParams        = $routeParams;
-        self.$location           = $location;
-        self.localStorageService = localStorageService;
+        self.$scope                  = $scope;
+        self.$routeParams            = $routeParams;
+        self.$location               = $location;
+        self.CsvStorage              = CsvStorage;
 
-        self.error      = null;
-        self.question   = 'is-there-latLng';
-        self.csvCacheId = null;
 
-        self.data = localStorageService.get($routeParams.csvCacheId);
+
+        self.error                   = null;
+        self.question                = 'is-there-latLng';
+        self.csvCacheId              = null;
+
+        self.data                    = CsvStorage.getCsv($routeParams.csvCacheId);
         self.data.latFieldIndex      = null;
         self.data.lngFieldIndex      = null;
         self.data.addressFieldsIndex = null;
@@ -24,7 +26,10 @@
     ReviewfieldsCtrl.prototype.goSaveData = function(csvCacheId) {
         var self = this;
 
-        self.$location.path('/save-data/'+csvCacheId);
+        if ( (self.data.latFieldIndex!==null && self.data.lngFieldIndex!==null) ||
+            self.data.addressFieldsIndex!==null ) {
+            self.$location.path('/save-data/'+csvCacheId);
+        }
     };
 
     ReviewfieldsCtrl.prototype.setQuestion = function(question) {
@@ -34,8 +39,11 @@
         self.question = question;
 
         if (question==='review-fields') {
-            self.localStorageService.set(self.$routeParams.csvCacheId, self.data);
             self.csvCacheId = self.$routeParams.csvCacheId;
+            self.CsvStorage.storeTempCsv(
+                self.$routeParams.csvCacheId,
+                self.data
+            );
         }
     };
 

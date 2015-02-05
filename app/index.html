@@ -19,59 +19,7 @@
         <!-- endbuild -->
 
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic,300italic,300' rel='stylesheet' type='text/css'>
-    </head>
-    <body ng-app="foundersMapQuestApp">
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
 
-        <!-- Add your site or application content here -->
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button"
-                        class="navbar-toggle collapsed"
-                        data-toggle="collapse"
-                        data-target="#founders-map-quest-menu">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#/map">
-                        Founders Map Quest
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="founders-map-quest-menu">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li ng-class="{ 'active': $route.current.originalPath == '/' }">
-                            <a ng-href="#/map">Map</a>
-                        </li>
-                        <li class="dropdown" ng-show="savedData.length">
-                            <a href="javascript:;"
-                                class="dropdown-toggle"
-                                data-toggle="dropdown"
-                                role="button"
-                                aria-expanded="false">
-                                Saved data <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li ng-repeat="item in savedData">
-                                    <a ng-href="#/map/{{item.csvCacheId}}">{{item.name}}</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li ng-class="{ 'active': $route.current.originalPath == '/load-data' }">
-                            <a ng-href="#/load-data">Load data</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div id="page-content">
-            <div ng-view=""></div>
-        </div>
 
         <!-- build:js(.) scripts/oldieshim.js -->
         <!--[if lt IE 9]>
@@ -112,6 +60,58 @@
         <script src="scripts/directives/fmqtablefooter.js"></script>
         <script src="scripts/filters/startfrom.js"></script>
         <script src="scripts/directives/fmqorderfield.js"></script>
+        <script src="scripts/filters/fmqfiltervalue.js"></script>
+        <script src="scripts/services/csvstorage.js"></script>
         <!-- endbuild -->
+    </head>
+    <body ng-app="foundersMapQuestApp">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#founders-map-quest-menu">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/map">
+                        Founders Map Quest
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="founders-map-quest-menu">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown" ng-show="csvList.length">
+                            <a href="javascript:;"
+                                class="dropdown-toggle"
+                                data-toggle="dropdown"
+                                role="button"
+                                aria-expanded="false">
+                                Stored CSVs <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="item in csvList">
+                                    <a ng-href="#/map/{{item.csvCacheId}}">{{item.name}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li ng-class="{ 'active': $route.current.originalPath == '/load-data' }">
+                            <a ng-href="#/load-data">Load CSV</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="page-content">
+            <div ng-view=""></div>
+        </div>
 </body>
 </html>

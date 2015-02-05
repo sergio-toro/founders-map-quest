@@ -2,20 +2,35 @@
 
     'use strict';
 
-    var LoadDataCtrl = function($scope, $location, CsvParser, localStorageService) {
+    var LoadDataCtrl = function($scope, $location, CsvParser, CsvStorage) {
         var self = this;
 
         self.$scope              = $scope;
         self.$location           = $location;
         self.CsvParser           = CsvParser;
-        self.localStorageService = localStorageService;
+        self.CsvStorage          = CsvStorage;
 
-        self.delimiter       = ',';
-        self.fieldDelimiters = [
+        self.delimiter           = ',';
+        self.fieldDelimiters     = [
             { name: ',',   value: ',' },
             { name: ';',   value: ';' },
             { name: 'tab', value: '\t' },
         ];
+
+        self.currentPage         = 0;
+        self.perPage             = 10;
+        self.perPageOptions      = [ 10, 25, 50, 75, 100, 500 ];
+
+        self.filteredData        = [];
+    };
+
+    LoadDataCtrl.prototype.filterData = function() {
+        var self = this;
+
+        var filteredData = self.data.data;
+
+        self.currentPage  = 0;
+        self.filteredData = filteredData;
     };
 
     LoadDataCtrl.prototype.generateUniqId = function() {
@@ -25,7 +40,9 @@
     LoadDataCtrl.prototype.goReviewFields = function(csvCacheId) {
         var self = this;
 
-        self.$location.path('/review-fields/'+csvCacheId);
+        if (csvCacheId) {
+            self.$location.path('/review-fields/'+csvCacheId);
+        }
     };
 
     LoadDataCtrl.prototype.parseCsv = function() {
@@ -35,7 +52,12 @@
         self.csvCacheId = self.generateUniqId();
 
         // Store in localStorage for next route
-        self.localStorageService.set(self.csvCacheId, self.data);
+        self.CsvStorage.storeTempCsv(
+            self.csvCacheId,
+            self.data
+        );
+
+        self.filterData();
     };
 
     LoadDataCtrl.prototype.loadCSVFile = function(csvFile) {
