@@ -10,13 +10,11 @@
         self.$location               = $location;
         self.CsvStorage              = CsvStorage;
 
-
-
         self.error                   = null;
         self.question                = 'is-there-latLng';
         self.csvCacheId              = null;
 
-        self.data                    = CsvStorage.getCsv($routeParams.csvCacheId);
+        self.data                    = CsvStorage.getCsv($routeParams.csvCacheId) || {};
         self.data.latFieldIndex      = null;
         self.data.lngFieldIndex      = null;
         self.data.addressFieldsIndex = null;

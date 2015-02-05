@@ -13,7 +13,7 @@
 
         self.csvCacheId          = $routeParams.csvCacheId;
 
-        self.data                = CsvStorage.getCsv($routeParams.csvCacheId);
+        self.data                = CsvStorage.getCsv($routeParams.csvCacheId) || {};
         self.data.name           = self.data.name || null;
         self.data.hideFieldIndex = null;
     };
