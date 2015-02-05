@@ -25,6 +25,11 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
+      'bower_components/ngmap/build/scripts/ng-map.js',
+      'bower_components/papaparse/papaparse.js',
+      'bower_components/angular-local-storage/dist/angular-local-storage.js',
+      'bower_components/gmaps-markerclusterer-plus/src/markerclusterer_packed.js',
+      'http://maps.google.com/maps/api/js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
