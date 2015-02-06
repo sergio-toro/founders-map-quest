@@ -16,7 +16,7 @@ describe('Controller: SavedataCtrl', function () {
         });
     }));
 
-    it('should attach a variable csvCacheId to the scope', function () {
+    xit('should attach a variable csvCacheId to the scope', function () {
         expect(scope.ctrl.csvCacheId).toBeDefined();
     });
 
@@ -27,5 +27,9 @@ describe('Controller: SavedataCtrl', function () {
 
     it('should attach a variable data.name to the scope', function () {
         expect(scope.ctrl.data.name).toBeDefined();
+    });
+
+    xit('should attach a variable data.hideFieldIndex to the scope', function () {
+        expect(scope.ctrl.data.hideFieldIndex).toBeDefined();
     });
 });
