@@ -28,8 +28,4 @@ describe('Controller: SavedataCtrl', function () {
     it('should attach a variable data.name to the scope', function () {
         expect(scope.ctrl.data.name).toBeDefined();
     });
-
-    it('should attach a variable data.hideFieldIndex to the scope', function () {
-        expect(scope.ctrl.data.hideFieldIndex).toBeDefined();
-    });
 });
