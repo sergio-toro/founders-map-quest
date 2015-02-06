@@ -8,14 +8,29 @@ describe('Directive: fmqFileInput', function () {
     var element,
         scope;
 
-    beforeEach(inject(function ($rootScope) {
+    beforeEach(inject(function ($rootScope, $compile) {
         scope = $rootScope.$new();
+
+        element = angular.element('<fmq-file-input ng-model="ctrl.file">Upload a file</fmq-file-input>');
+        element = $compile(element)(scope);
+        scope.$digest();
     }));
 
-    xit('should make hidden element visible', inject(function ($compile) {
-        element = angular.element('<fmq-file-input></fmq-file-input>');
-        element = $compile(element)(scope);
+    it('should transclude the text', inject(function () {
+        expect(element.text()).toBe('Upload a file');
+    }));
 
-        expect(element.scope()).toBe('this is the fmqFileInput directive');
+    it('should have isolatedScope.ctrl', inject(function () {
+        expect(element.isolateScope()).toBeDefined();
+        expect(element.isolateScope().ctrl).toBeDefined();
+    }));
+
+    it('should change btnClass', inject(function ($compile) {
+        element = angular.element('<fmq-file-input btn-class="\'test-new-class\'" ng-model="ctrl.file">Upload a file</fmq-file-input>');
+        element = $compile(element)(scope);
+        scope.$digest();
+
+        expect(element.isolateScope()).toBeDefined();
+        expect(element.isolateScope().ctrl.btnClass).toBe('test-new-class');
     }));
 });

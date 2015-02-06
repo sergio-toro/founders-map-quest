@@ -16,7 +16,20 @@ describe('Controller: SavedataCtrl', function () {
         });
     }));
 
-    it('should attach a variable data.hideFieldIndex to the scope.ctrl', function () {
-        expect(scope.ctrl.data.hideFieldIndex).toBe(null);
+    it('should attach a variable csvCacheId to the scope', function () {
+        expect(scope.ctrl.csvCacheId).toBeDefined();
+    });
+
+    it('should attach a variable data to the scope', function () {
+        expect(scope.ctrl.data).toBeDefined();
+        expect(typeof scope.ctrl.data).toBe('object');
+    });
+
+    it('should attach a variable data.name to the scope', function () {
+        expect(scope.ctrl.data.name).toBeDefined();
+    });
+
+    it('should attach a variable data.hideFieldIndex to the scope', function () {
+        expect(scope.ctrl.data.hideFieldIndex).toBeDefined();
     });
 });
