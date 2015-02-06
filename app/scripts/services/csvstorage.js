@@ -52,6 +52,7 @@
         var self = this;
 
         if (!csvCacheId || !csvData.name) {
+            throw new 'Csv data should have a name property';
             return;
         }
 
@@ -114,16 +115,24 @@
                     return CsvStorage.getCsv(csvCacheId);
                 },
                 storeCsv: function(csvCacheId, csvData) {
-                    CsvStorage.storeCsv(csvCacheId, csvData);
+                    var result = CsvStorage.storeCsv(csvCacheId, csvData);
                     CsvStorage.updateCsvList(csvCacheId, csvData);
+                    return result;
                 },
                 storeTempCsv: function(csvCacheId, csvData) {
                     return CsvStorage.storeCsv(csvCacheId, csvData);
                 },
                 removeCsv: function(csvCacheId){
-                    CsvStorage.removeCsv(csvCacheId);
+                    var result = CsvStorage.removeCsv(csvCacheId);
                     CsvStorage.removeCsvFromList(csvCacheId);
-                }
+                    return result;
+                },
+                clear: function() {
+                    for (var i = CsvStorage.data.csvList.length - 1; i >= 0; i--) {
+                        CsvStorage.removeCsv(CsvStorage.data.csvList[i].csvCacheId);
+                        CsvStorage.removeCsvFromList(CsvStorage.data.csvList[i].csvCacheId);
+                    }
+                },
             };
         })
     ;
