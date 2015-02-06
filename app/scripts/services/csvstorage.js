@@ -52,8 +52,7 @@
         var self = this;
 
         if (!csvCacheId || !csvData.name) {
-            throw new 'Csv data should have a name property';
-            return;
+            throw 'Csv data should have a name property';
         }
 
         // check if it's already saved
@@ -103,7 +102,7 @@
      * @name foundersMapQuestApp.CsvStorage
      * @description
      * # CsvStorage
-     * Service in the foundersMapQuestApp.
+     * Factory in the foundersMapQuestApp.
      */
     angular.module('foundersMapQuestApp')
         .factory('CsvStorage', function(localStorageService) {
